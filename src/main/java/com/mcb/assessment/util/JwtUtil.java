@@ -53,4 +53,11 @@ public class JwtUtil {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+    
+    public String invalidToken(String subject) {
+    	Map<String, Object> claims = new HashMap<>();
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + AuthenticationConfigConstants.LOGOUT_XPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS256,AuthenticationConfigConstants.SECRET_KEY).compact();
+    }
 }

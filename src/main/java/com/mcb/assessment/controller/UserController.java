@@ -50,11 +50,12 @@ public class UserController {
 					new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword())
 					);
 		}catch(BadCredentialsException e) {
-
 			LoginUser user= userService.updateAttempt(request.getUsername());
-			if(user!=null && user.getAttempt()>=3)
+			if(user!=null && user.getAttempt()>=3) {
 				return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse("User Blocked",null,user.getAttempt()),
 						HttpStatus.OK);
+			}
+				
 			return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse(e.getMessage(),null,user.getAttempt()),HttpStatus.OK);
 		}
 		
@@ -68,6 +69,12 @@ public class UserController {
 		user= userService.updateAttemptZero(request.getUsername());
 		return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse(jwt,user.getRole(),null),
 				HttpStatus.OK);
+	}
+	
+	@PostMapping("/logout")
+	public ResponseEntity<String> logOut(@RequestBody AuthenticationRequest request) {
+		System.out.println("Logout request: "+request.getUsername());
+		return new ResponseEntity<String>(jwtUtil.invalidToken(request.getUsername()),HttpStatus.OK);
 	}
 
 	/*

@@ -1,4 +1,6 @@
 package com.mcb.assessment.entity;
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -19,6 +21,8 @@ public class LoginUser {
     private String password;
     private String role;
     private Long attempt;
+    private LocalDateTime date;
+    
 	/**
 	 * @return the id
 	 */
@@ -86,6 +90,17 @@ public class LoginUser {
 
 	public void setAttempt(Long attempt) {
 		this.attempt = attempt;
+	}
+
+
+	
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
 	}
 
 

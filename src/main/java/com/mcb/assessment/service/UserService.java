@@ -1,5 +1,7 @@
 package com.mcb.assessment.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class UserService {
     public LoginUser updateAttempt(String username) {
     	LoginUser user=userRepository.findByUsername(username).orElseGet(LoginUser::new);
     	user.setAttempt(user.getAttempt()+1);
+    	if(user.getAttempt()<=2)
+    		user.setDate(LocalDateTime.now());
     	return userRepository.save(user);
     }
 

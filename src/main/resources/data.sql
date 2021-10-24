@@ -5,12 +5,14 @@ CREATE TABLE user (
     username varchar(255) NOT NULL,
     password varchar(255),
     role varchar2(50) not null,
-    attempt int DEFAULT 0
+    attempt int DEFAULT 0,
+    date datetime 
 );
 
 
-INSERT INTO user  VALUES (1111,'ram', '$2a$12$HdEqcKz.q8437jFqH/.sVOhHdY8Vs.sjK6mDSdX3NOEzEP/Vdf8oS	', 'admin',0);
-INSERT INTO user  VALUES (2222,'username', '$2a$12$HdEqcKz.q8437jFqH/.sVOhHdY8Vs.sjK6mDSdX3NOEzEP/Vdf8oS', 'user',0);
+INSERT INTO user  VALUES (1111,'ram', '$2a$12$HdEqcKz.q8437jFqH/.sVOhHdY8Vs.sjK6mDSdX3NOEzEP/Vdf8oS	', 'admin',0,current_date  +  CURRENT_TIME);
+INSERT INTO user  VALUES (2222,'username', '$2a$12$HdEqcKz.q8437jFqH/.sVOhHdY8Vs.sjK6mDSdX3NOEzEP/Vdf8oS', 'user',0,current_date  +  CURRENT_TIME);
+INSERT INTO user  VALUES (2223,'username@gmail.com', '$2a$12$HdEqcKz.q8437jFqH/.sVOhHdY8Vs.sjK6mDSdX3NOEzEP/Vdf8oS', 'user',0,current_date  +  CURRENT_TIME);
 
 --student
 DROP TABLE IF EXISTS student;

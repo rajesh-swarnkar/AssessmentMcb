@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.mcb.assessment.service.AuthenticationUserDetailService;
 
@@ -35,7 +38,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.headers().frameOptions().sameOrigin();
 		
 		http.csrf().disable()
+			.cors().and()
 			.authorizeRequests().antMatchers("/authenticate").permitAll()
+			.antMatchers("/logout").permitAll()
 			.antMatchers("/v2/api-docs", "/configuration/ui","/swagger-resources/**","/configuration/security","/swagger-ui.html","/webjars/**").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
 			.antMatchers("/marks/**","/group/**","/student/**","/subject/**","/subjectTeacher/**").permitAll()
@@ -44,6 +49,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.and().sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
+	
+	@Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        return source;
+    }
 
 
 
